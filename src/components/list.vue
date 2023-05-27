@@ -42,7 +42,7 @@ const list = computed(() => {
   }
 })
 
-async function openLink(row) {
+async function openLink(row: { type: string; link: string }) {
   if (row.type === 'directory') {
     const { statusCode } = await useFetch(`${props.host + row.link}/index.html`)
       .head()
