@@ -35,25 +35,19 @@ const list = computed(() => {
       }
     })
   }
-  else if (error.value) {
-    if (history?.state?.back)
+  else if (!isFetching.value && (error.value || !data.value || !Array.isArray(data.value))) {
+    window.open(props.host + route.path)
+    error.value = null
+    if (history.length > 1 && history?.state?.back)
       router.back()
-    window.open(props.host + route.path, '_self')
   }
 })
 
 async function openLink(row: { type: string; link: string }) {
-  if (row.type === 'directory') {
-    const { statusCode } = await useFetch(`${props.host + row.link}/index.html`)
-      .head()
-    if (statusCode.value === 200)
-      window.open(props.host + row.link)
-    else
-      await router.push(row.link)
-  }
-  else {
+  if (row.type === 'directory')
+    await router.push(row.link)
+  else
     window.open(props.host + row.link)
-  }
 }
 </script>
 
