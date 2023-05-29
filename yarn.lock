@@ -299,7 +299,7 @@
   dependencies:
     "@iconify/types" "*"
 
-"@iconify-json/icon-park-solid@^1.1.11":
+"@iconify-json/icon-park-solid@^1.1.9":
   version "1.1.9"
   resolved "https://registry.npmmirror.com/@iconify-json/icon-park-solid/-/icon-park-solid-1.1.9.tgz#75c9a83eae9e5660698998d8d86fdfcba733b578"
   integrity sha512-zYjkJqTKg4xSh7TlBeyH0Q0wfNuI+utErT2wA5grMsFkm6adISIB8QJ68H0whqhUtRH6s1BBPt/thXwLxwPIEw==

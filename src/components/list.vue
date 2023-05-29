@@ -59,7 +59,7 @@ async function openLink(row: { type: string; link: string }) {
           <div class="name-wrapper">
             <i v-if="scope.row.type === 'directory'" class="i-icon-park-outline-folder-open" />
             <i v-else class="i-icon-park-outline-file-code" />
-            <span cursor-pointer underline @click="openLink(scope.row)">
+            <span cursor-pointer underline :title="scope.row.link" @click="openLink(scope.row)">
               {{ scope.row.name }}
             </span>
           </div>
