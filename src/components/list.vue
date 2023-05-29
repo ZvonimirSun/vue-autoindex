@@ -15,7 +15,7 @@ const { isFetching, error, data } = await useFetch(url, {
 
 const list = computed(() => {
   if (!isFetching.value && !error.value && data.value && Array.isArray(data.value)) {
-    return data.value.map(({ name, mtime, size, type }: { name: string; mtime: string; size?: number; type: string }) => {
+    const result = data.value.map(({ name, mtime, size, type }: { name: string; mtime?: string; size?: number; type: string }) => {
       let link = ''
       if (route.path.startsWith('/'))
         link += route.path
@@ -28,12 +28,23 @@ const list = computed(() => {
 
       return {
         name,
-        mtime: new Date(mtime),
+        mtime: mtime ? new Date(mtime) : null,
         size,
         type,
         link,
       }
     })
+    if (route.path !== '/') {
+      result.unshift({
+        name: '..',
+        mtime: null,
+        size: 0,
+        type: 'directory',
+        link: route.path.substring(0, route.path.lastIndexOf('/')) || '/',
+      })
+    }
+
+    return result
   }
   else if (!isFetching.value && (error.value || !data.value || !Array.isArray(data.value))) {
     window.open(props.host + route.path)
@@ -67,7 +78,7 @@ async function openLink(row: { type: string; link: string }) {
       </el-table-column>
       <el-table-column prop="mtime" label="修改时间" sortable>
         <template #default="scope">
-          {{ scope.row.mtime.toLocaleString() }}
+          {{ scope.row.mtime?.toLocaleString() }}
         </template>
       </el-table-column>
       <el-table-column prop="size" label="文件大小" sortable>
