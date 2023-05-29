@@ -63,30 +63,33 @@ async function openLink(row: { type: string; link: string }) {
 </script>
 
 <template>
-  <div w-full h-full overflow-auto>
-    <el-table v-if="list" v-loading="isFetching" :data="list" stripe border>
-      <el-table-column prop="name" label="名称" sortable>
-        <template #default="scope">
-          <div class="name-wrapper">
-            <i v-if="scope.row.type === 'directory'" class="i-icon-park-outline-folder-open" />
-            <i v-else class="i-icon-park-outline-file-code" />
-            <span cursor-pointer underline :title="scope.row.link" @click="openLink(scope.row)">
-              {{ scope.row.name }}
-            </span>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column prop="mtime" label="修改时间" sortable>
-        <template #default="scope">
-          {{ scope.row.mtime?.toLocaleString() }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="size" label="文件大小" sortable>
-        <template #default="scope">
-          {{ scope.row.size > 0 ? `${(scope.row.size / 1024).toFixed(2)} KB` : '' }}
-        </template>
-      </el-table-column>
-    </el-table>
+  <div w-full h-full flex flex-col box-border p-l-2 p-r-2 p-b-2>
+    <h2>索引：<span color-gray underline>{{ route.path.toUpperCase() }}</span></h2>
+    <div flex-1 overflow-auto>
+      <el-table v-if="list" v-loading="isFetching" :data="list" stripe border>
+        <el-table-column prop="name" label="名称" sortable>
+          <template #default="scope">
+            <div class="name-wrapper">
+              <i v-if="scope.row.type === 'directory'" class="i-icon-park-outline-folder-open" />
+              <i v-else class="i-icon-park-outline-file-code" />
+              <span cursor-pointer underline :title="scope.row.link" @click="openLink(scope.row)">
+                {{ scope.row.name }}
+              </span>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="mtime" label="修改时间" sortable>
+          <template #default="scope">
+            {{ scope.row.mtime?.toLocaleString() }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="size" label="文件大小" sortable>
+          <template #default="scope">
+            {{ scope.row.size > 0 ? `${(scope.row.size / 1024).toFixed(2)} KB` : '' }}
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
   </div>
 </template>
 
